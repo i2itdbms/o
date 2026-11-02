@@ -1,5 +1,3 @@
-2
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -22,30 +20,39 @@ void sort(int a[], int n, int desc) {
 }
 
 int main() {
+    int n, arr[100], i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter array elements: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
     pid_t pid = fork();
 
-    int n = 5;
-    int arr[] = {2, 5, 1, 6, 3};
-
     if (pid < 0) {
+        printf("Fork failed");
         return 1;
     }
 
     if (pid == 0) {
-        printf("This is child\n");
+        printf("This is child (Ascending Order)\n");
         sort(arr, n, 0);
 
-        for (int i = 0; i < n; i++)
+        for (i = 0; i < n; i++)
             printf("%d ", arr[i]);
 
         printf("\n");
-    } else {
+    } 
+    else {
         wait(NULL);
-        printf("This is parent\n");
+        printf("This is parent (Descending Order)\n");
 
         sort(arr, n, 1);
 
-        for (int i = 0; i < n; i++)
+        for (i = 0; i < n; i++)
             printf("%d ", arr[i]);
 
         printf("\n");
@@ -53,3 +60,4 @@ int main() {
 
     return 0;
 }
+
